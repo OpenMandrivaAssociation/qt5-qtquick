@@ -5,7 +5,6 @@
 %define qtminor 4
 %define qtsubminor 0
 
-%define major_private 1
 %define qtversion %{api}.%{qtminor}.%{qtsubminor}
 
 %define qtdeclarative %mklibname qt%{api}declarative %{major}
