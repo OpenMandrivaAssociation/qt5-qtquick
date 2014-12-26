@@ -1,7 +1,6 @@
 %define api 5
 %define major %api
 
-%define api 5
 %define qtminor 4
 %define qtsubminor 0
 
