@@ -2,7 +2,7 @@
 %define major %api
 
 %define qtminor 4
-%define qtsubminor 0
+%define qtsubminor 1
 
 %define qtversion %{api}.%{qtminor}.%{qtsubminor}
 
@@ -31,7 +31,7 @@ BuildRequires:	qt5-qtscript-private-devel = %{version}
 BuildRequires:	qt5-qtscripttools-private-devel = %{version}
 
 %description
-Qt GUI toolkit
+Qt GUI toolkit.
 
 #------------------------------------------------------------------------------
 
