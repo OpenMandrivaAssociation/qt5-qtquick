@@ -1,10 +1,6 @@
-%define api 5
+%define api %(echo %{version} |cut -d. -f1)
 %define major %api
-
-%define qtminor 4
-%define qtsubminor 1
-
-%define qtversion %{api}.%{qtminor}.%{qtsubminor}
+%define beta alpha
 
 %define qtdeclarative %mklibname qt%{api}declarative %{major}
 %define qtdeclaratived %mklibname qt%{api}declarative -d
@@ -12,16 +8,21 @@
 
 %define _qt5_prefix %{_libdir}/qt%{api}
 
-%define qttarballdir qtquick1-opensource-src-%{qtversion}
+%define qttarballdir qtquick1-opensource-src-%{version}%{?beta:-%{beta}}
 
 Name:		qt5-qtquick
-Version:	%{qtversion}
+Version:	5.5.0
+%if 0%{?beta:1}
+Release:	0.%{beta}.1
+Source0:	http://download.qt.io/development_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}-%{beta}/submodules/%{qttarballdir}.tar.xz
+%else
 Release:	1
+Source0:	http://download.qt.io/official_releases/qt/%(echo %{version} |cut -d. -f1-2)/%{version}/submodules/%{qttarballdir}.tar.xz
+%endif
 Summary:	Qt GUI toolkit
 Group:		Development/KDE and Qt
 License:	LGPLv2 with exceptions or GPLv3 with exceptions and GFDL
 URL:		http://www.qt-project.org
-Source0:	http://download.qt-project.org/official_releases/qt/%{api}.%{qtminor}/%{version}/submodules/%{qttarballdir}.tar.xz
 BuildRequires:	qt5-qtbase-devel = %{version}
 BuildRequires:	pkgconfig(Qt5Script) = %{version}
 BuildRequires:	pkgconfig(Qt5Core) = %{version}
@@ -31,7 +32,7 @@ BuildRequires:	qt5-qtscript-private-devel = %{version}
 BuildRequires:	qt5-qtscripttools-private-devel = %{version}
 
 %description
-Qt GUI toolkit.
+Qt Quick1 toolkit.
 
 #------------------------------------------------------------------------------
 
@@ -42,7 +43,7 @@ Group: Development/KDE and Qt
 %description qmlviewer
 Qt%{api} Qmlviewer Utility.
 
-This a tool for loading QML documents that makes it easy to quickly 
+This a tool for loading QML documents that makes it easy to quickly
 develop and debug QML applications.
 
 %files qmlviewer
@@ -79,7 +80,7 @@ Devel files needed to build apps based on QtVersit.
 %{_qt5_libdir}/libQt5Declarative.so
 %{_qt5_libdir}/pkgconfig/Qt5Declarative.pc
 %{_qt5_includedir}/QtDeclarative
-%exclude %{_qt5_includedir}/QtDeclarative/%qtversion
+%exclude %{_qt5_includedir}/QtDeclarative/%version
 %{_qt5_libdir}/cmake/Qt5Declarative/Qt5DeclarativeConfig.cmake
 %{_qt5_libdir}/cmake/Qt5Declarative/Qt5DeclarativeConfigVersion.cmake
 %{_qt5_libdir}/cmake/Qt5Declarative/Qt5Declarative_QTcpServerConnection.cmake
@@ -100,7 +101,7 @@ Requires:	qt5-qtscript-private-devel = %version
 Devel files needed to build apps based on QtVersit.
 
 %files -n %{qtdeclaratived_p_d}
-%{_qt5_includedir}/QtDeclarative/%qtversion
+%{_qt5_includedir}/QtDeclarative/%version
 %{_qt5_prefix}/mkspecs/modules/qt_lib_declarative_private.pri
 
 #------------------------------------------------------------------------------
