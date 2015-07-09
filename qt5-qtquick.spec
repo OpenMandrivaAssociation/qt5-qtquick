@@ -1,6 +1,6 @@
 %define api %(echo %{version} |cut -d. -f1)
 %define major %api
-%define beta alpha
+%define beta %nil
 
 %define qtdeclarative %mklibname qt%{api}declarative %{major}
 %define qtdeclaratived %mklibname qt%{api}declarative -d
@@ -8,7 +8,7 @@
 
 %define _qt5_prefix %{_libdir}/qt%{api}
 
-%define qttarballdir qtquick1-opensource-src-%{version}%{?beta:-%{beta}}
+%define qttarballdir qtquick1-opensource-src-%{version}%{?beta:%{beta}}
 
 Name:		qt5-qtquick
 Version:	5.5.0
